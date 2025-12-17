@@ -1,0 +1,18 @@
+{
+  "name": "lesson1-introduction",
+  "version": "0.0.1",
+  "description": "This project for tutorial",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "keywords": [
+    "tutorial",
+    "nodejs"
+  ],
+  "author": "Hasan Bakhtiar",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
