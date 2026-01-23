@@ -7,8 +7,10 @@ app.use(express.json());
 // Middleware End
 
 const productRouter = require('./routes/product');
+const categoryRouter = require('./routes/category');
 
 app.use('/product', productRouter);
+app.use('/category', categoryRouter);
 app.use('/', (req, res) => {
     res.status(200).send("App Start");
 });

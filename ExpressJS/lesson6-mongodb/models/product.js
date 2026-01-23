@@ -9,7 +9,15 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    category: {
+        type: String,
+        required: true
+    },
     price: {
+        type: Number,
+        required: true
+    },
+    discountPrice: {
         type: Number,
         required: true
     },
@@ -18,8 +26,8 @@ const productSchema = new mongoose.Schema({
         required: true
     },
     stock: {
-        type: Boolean,
-        default: true
+        type: Number,
+        default: 1
     }
 }, { timestamps: true });
 
