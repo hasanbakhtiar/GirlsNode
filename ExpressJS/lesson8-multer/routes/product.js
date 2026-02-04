@@ -17,9 +17,12 @@ route.post('/', upload.fields([
     { name: "singleImage", maxCount: 1 },
     { name: "images", maxCount: 5 }
 ]), productCreate);
-route.put('/:id', productUpdate);
+route.put('/:id', upload.fields([
+    { name: "singleImage", maxCount: 1 },
+    { name: "images", maxCount: 5 }
+]), productUpdate);
 
-route.delete('/all/:id', productDeleteAll)
-route.delete('/:id', productDelete)
+route.delete('/:id', productDelete);
+route.delete('/all', productDeleteAll);
 
 module.exports = route;
