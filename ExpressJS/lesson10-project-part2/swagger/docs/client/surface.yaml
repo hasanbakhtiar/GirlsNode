@@ -1,0 +1,55 @@
+openapi: 3.0.0
+info:
+  title: Color API
+  version: 1.0.0
+  description: API for product colors
+
+paths:
+  /api/v1/material:
+    get:
+      summary: Get all materials
+      tags:
+        - Material
+      responses:
+        '200':
+          description: Materials fetched successfully
+        '404':
+          description: Material not found
+
+  /api/v1/material/{id}:
+    get:
+      summary: Get single material
+      tags:
+        - Material
+    
+      responses:
+        '200':
+          description: Material fetched successfully
+        '404':
+          description: Material not found
+
+
+  /api/v1/color:
+    get:
+      summary: Get all colors
+      tags:
+        - Color
+      responses:
+        '200':
+          description: Colors fetched successfully
+        '404':
+          description: Color not found
+
+  /api/v1/color/{id}:
+    get:
+      summary: Get single color
+      tags:
+        - Color
+      responses:
+        '200':
+          description: Color fetched successfully
+        '404':
+          description: Color not found
+
+
+

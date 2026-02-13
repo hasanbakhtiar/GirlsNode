@@ -1,0 +1,139 @@
+openapi: 3.0.0
+
+info:
+  title: Color API
+  version: 1.0.0
+  description: Color management endpoints
+
+servers:
+  - url: http://localhost:5000
+    description: Local server
+
+tags:
+  - name: Color
+    description: Color CRUD operations
+
+paths:
+  /api/v1/ad/color:
+    post:
+      summary: Create color
+      tags:
+        - Color
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ColorInput'
+      responses:
+        '201':
+          description: Color created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Color'
+        '400':
+          description: Validation error
+
+    get:
+      summary: Get all colors
+      tags:
+        - Color
+      responses:
+        '200':
+          description: Color list fetched successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  dataLength:
+                    type: integer
+                    example: 3
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Color'
+        '404':
+          description: Color not found
+
+  /api/v1/ad/color/{id}:
+    put:
+      summary: Update color
+      tags:
+        - Color
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Color ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ColorInput'
+      responses:
+        '200':
+          description: Color updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Color'
+        '404':
+          description: Color not found
+
+    delete:
+      summary: Delete color
+      tags:
+        - Color
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Color ID
+      responses:
+        '204':
+          description: Color deleted successfully
+        '404':
+          description: Color not found
+
+components:
+  schemas:
+    Color:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 65f1a2b9c9d1a12a12345611
+        title:
+          type: string
+          example: Red
+        colorCode:
+          type: string
+          example: "#FF0000"
+        createdAt:
+          type: string
+          format: date-time
+          example: "2025-02-10T12:30:45.000Z"
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2025-02-12T09:15:22.000Z"
+
+    ColorInput:
+      type: object
+      required:
+        - title
+        - colorCode
+      properties:
+        title:
+          type: string
+          example: Blue
+        colorCode:
+          type: string
+          example: "#0000FF"
