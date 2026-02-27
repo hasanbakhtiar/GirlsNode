@@ -1,0 +1,128 @@
+openapi: 3.0.0
+info:
+  title: Product API
+  version: 1.0.0
+  description: Product CRUD API documentation
+
+
+paths:
+  /api/v1/ad/product:
+    post:
+      summary: Create new product
+      tags:
+      - Product
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                slug:
+                  type: string
+                price:
+                  type: number
+                discountPrice:
+                  type: number
+                description:
+                  type: string
+                stockCount:
+                  type: number
+                color:
+                  type: string
+                material:
+                  type: string
+                gender:
+                  type: string
+                  enum: [ male, female, uni ]
+                newProduct:
+                  type: boolean
+                bestseller:
+                  type: boolean
+                thumbnail:
+                  type: string
+                  format: binary
+                images:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        201:
+          description: Product created
+        400:
+          description: Validation error
+
+  /api/v1/ad/product/{id}:
+    put:
+      summary: Update product by MongoDB _id
+      tags:
+      - Product
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                slug:
+                  type: string
+                price:
+                  type: number
+                discountPrice:
+                  type: number
+                description:
+                  type: string
+                stockCount:
+                  type: number
+                color:
+                  type: string
+                material:
+                  type: string
+                gender:
+                  type: string
+                  enum: [ male, female, uni ]
+                newProduct:
+                  type: boolean
+                bestseller:
+                  type: boolean
+                thumbnail:
+                  type: string
+                  format: binary
+                images:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        200:
+          description: Product updated
+        400:
+          description: Validation error
+        404:
+          description: Product not found
+
+    delete:
+      summary: Delete product by MongoDB _id
+      tags:
+      - Product
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Product deleted
+        404:
+          description: Product not found

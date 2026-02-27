@@ -1,0 +1,201 @@
+paths:
+  /api/v1/product:
+    get:
+      summary: Get product list
+      description: >
+        Returns product list.
+        - If `color` or `material` query is provided, filters by both.
+        - Else if `page` or `limit` is provided, returns paginated data.
+        - Else returns all products.
+      tags:
+        - Product
+      parameters:
+        - name: color
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Color ID for filtering (used with material)
+
+        - name: material
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Material ID for filtering (used with color)
+
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            example: 1
+          description: Page number (pagination)
+
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            example: 5
+          description: Items per page (pagination)
+
+      responses:
+        '200':
+          description: Products fetched successfully
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  # Filter OR normal list response
+                  - type: object
+                    properties:
+                      dataLength:
+                        type: integer
+                        example: 2
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Product'
+
+                  # Pagination response
+                  - type: object
+                    properties:
+                      page:
+                        type: integer
+                        example: 1
+                      limit:
+                        type: integer
+                        example: 5
+                      totalPages:
+                        type: integer
+                        example: 4
+                      dataLength:
+                        type: integer
+                        example: 5
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Product'
+
+        '404':
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusMessage:
+                    type: string
+                    example: Product not found
+
+
+  /api/v1/product/{id}:
+    get:
+      summary: Get single product
+      tags:
+        - Product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Product ID
+      responses:
+        '200':
+          description: Product fetched successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '404':
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusMessage:
+                    type: string
+                    example: Product not found
+
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 65f1a2b9c9d1a12a12345678
+
+        productId:
+          type: string
+          example: PRD-1001
+
+        slug:
+          type: string
+          example: wooden-table-modern
+
+        thumbnail:
+          type: string
+          example: thumbnail.jpg
+
+        images:
+          type: array
+          items:
+            type: string
+            example: image1.jpg
+
+        title:
+          type: string
+          example: Wooden Table
+
+        price:
+          type: number
+          example: 120
+
+        discountPrice:
+          type: number
+          example: 99
+
+        description:
+          type: string
+          example: High quality wooden dining table
+
+        stockCount:
+          type: integer
+          example: 15
+
+        color:
+          $ref: '#/components/schemas/Color'
+
+        material:
+          $ref: '#/components/schemas/Material'
+
+        gender:
+          type: string
+          enum:
+            - male
+            - female
+            - uni
+          example: uni
+
+        newProduct:
+          type: boolean
+          example: false
+
+        bestseller:
+          type: boolean
+          example: true
+
+        createdAt:
+          type: string
+          format: date-time
+          example: "2025-02-10T12:30:45.000Z"
+
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2025-02-12T09:15:22.000Z"
