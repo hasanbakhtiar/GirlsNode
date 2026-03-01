@@ -1,0 +1,25 @@
+const express = require('express');
+const { materialSingleData, materialAllList } = require('../../controllers/product/material');
+const { colorSingleData, colorAllList } = require('../../controllers/product/color');
+const { productSingleData, productAllList } = require('../../controllers/product/product');
+const { login, register } = require('../../controllers/auth/auth');
+const route = express.Router();
+
+
+route.post("/login", login);
+route.post("/register", register);
+
+
+route.get('/product/:id', productSingleData);
+route.get('/product/', productAllList);
+
+route.get('/material/:id', materialSingleData);
+route.get('/material/', materialAllList);
+
+route.get('/color/:id', colorSingleData);
+route.get('/color/', colorAllList);
+
+
+
+
+module.exports = route;
