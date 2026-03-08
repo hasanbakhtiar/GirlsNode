@@ -11,7 +11,31 @@ const swaggerDefinition = {
         {
             url: "http://localhost:3000"
         }
-    ]
+    ],
+    components: {
+        securitySchemes: {
+            customAuth: {
+                type: 'apiKey',
+                in: 'header',
+                name: 'x-auth-token',
+                description: 'Statik və ya login token, Bearer olmadan',
+            },
+            apiKeyAuth: {
+                type: 'apiKey',
+                in: 'header',
+                name: 'static-access',
+                description: 'Statik API açarı',
+            },
+        },
+    },
+    security: [
+        {
+            customAuth: [],
+        },
+        {
+            apiKeyAuth: [],
+        },
+    ],
 }
 
 const options = {

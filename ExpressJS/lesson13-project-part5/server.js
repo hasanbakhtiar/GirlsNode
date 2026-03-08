@@ -16,7 +16,7 @@ const swaggerDocs = require('./swagger');
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 // Swagger End
 
-const { staticAccessToken } = require('./middlewares/staticAccessToken');
+// const { staticAccessToken } = require('./middlewares/staticAccessToken');
 // app.use(staticAccessToken);
 
 
@@ -44,8 +44,8 @@ app.use(`${clintStartApi}`, surfaceRouter);
 const { auth } = require('./middlewares/auth');
 app.use(auth);
 
-const {isAdmin}  = require('./middlewares/isAdmin');
-app.use(isAdmin);
+// const {isAdmin}  = require('./middlewares/isAdmin');
+// app.use(isAdmin);
 
 
 

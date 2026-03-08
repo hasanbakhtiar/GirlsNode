@@ -1,8 +1,8 @@
 openapi: 3.0.0
 info:
-  title: Color API
+  title: Auth API
   version: 1.0.0
-  description: API for product colors
+  description: API for Authentication
 
 paths:
   /api/v1/material:
@@ -21,13 +21,18 @@ paths:
       summary: Get single material
       tags:
         - Material
-    
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Material ID
       responses:
         '200':
           description: Material fetched successfully
         '404':
           description: Material not found
-
 
   /api/v1/color:
     get:
@@ -45,11 +50,132 @@ paths:
       summary: Get single color
       tags:
         - Color
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Color ID
       responses:
         '200':
           description: Color fetched successfully
         '404':
           description: Color not found
 
+  /api/v1/register:
+    post:
+      summary: Register a new user
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fullname:
+                  type: string
+                  example: John Doe
+                email:
+                  type: string
+                  example: john@example.com
+                password:
+                  type: string
+                  example: secret123
+                role:
+                  type: string
+                  default: user
+                  example: user
+      responses:
+        '200':
+          description: Register success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Register success
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Validation error message
+        '403':
+          description: Already existed user or no permission
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Already existed user
 
-
+  /api/v1/login:
+    post:
+      summary: Login user
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  example: john@example.com
+                password:
+                  type: string
+                  example: secret123
+      responses:
+        '200':
+          description: Login successfully
+          headers:
+            x-auth-token:
+              schema:
+                type: string
+              description: JWT auth token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Login is successfully
+                  data:
+                    type: object
+                    properties:
+                      fullname:
+                        type: string
+                        example: John Doe
+                      email:
+                        type: string
+                        example: john@example.com
+                      phone:
+                        type: string
+                        example: "+994501234567"
+        '400':
+          description: Wrong credentials or user not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Email of password is wrong!
